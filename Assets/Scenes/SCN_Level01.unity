@@ -553,7 +553,10 @@ MonoBehaviour:
   enemies:
   - {fileID: 1869982225}
   - {fileID: 1207329805}
-  StartPoint: {fileID: 1207329806}
+  duration: 0.2
+  delay: 0.05
+  ease: 27
+  StartPoint: {fileID: 1978284872}
 --- !u!1 &388782692 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8835229685202505509, guid: 00afc9fb4087652419d090da0b825d97, type: 3}
@@ -575,7 +578,7 @@ SortingGroup:
   m_SortingLayerID: 269054693
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_SortAtRoot: 0
+  m_SortAtRoot: 1
 --- !u!1 &394303427
 GameObject:
   m_ObjectHideFlags: 0
@@ -2184,7 +2187,7 @@ SortingGroup:
   m_SortingLayerID: 269054693
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_SortAtRoot: 0
+  m_SortAtRoot: 1
 --- !u!1 &1216257641
 GameObject:
   m_ObjectHideFlags: 0
@@ -4095,7 +4098,7 @@ SortingGroup:
   m_SortingLayerID: 269054693
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_SortAtRoot: 0
+  m_SortAtRoot: 1
 --- !u!1 &1877822786
 GameObject:
   m_ObjectHideFlags: 0
@@ -4463,7 +4466,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8835229685202505509, guid: 00afc9fb4087652419d090da0b825d97, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
