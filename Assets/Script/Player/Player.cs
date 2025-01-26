@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     public float animationSwipeDuration = .1f;
 
     private float _currentSpeed;
-    private bool _isRunning = false;
+    //private bool _isRunning = false;
 
     private void Update()
     {
@@ -72,7 +72,7 @@ public class Player : MonoBehaviour
             animator.SetBool(boolRun, false);
         }
 
-        Debug.Log(myrigidbody.linearVelocity);
+        
 
         if (myrigidbody.linearVelocity.x > 0)
         {
