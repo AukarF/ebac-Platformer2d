@@ -21,11 +21,30 @@ public class Player : MonoBehaviour
 
     [Header("Animation.Player")]
     public string boolRun = "Run";
+    public string triggerDeath = "Death";
     public Animator animator;
     public float animationSwipeDuration = .1f;
+    public HealthBase healthBase;
+
 
     private float _currentSpeed;
     //private bool _isRunning = false;
+
+
+    private void Awake()
+    {
+        if(healthBase != null)
+        {
+            healthBase.OnKill += OnPlayerKill;
+        }
+    }
+
+    private void OnPlayerKill()
+    {
+        healthBase.OnKill -= OnPlayerKill;
+
+        animator.SetTrigger(triggerDeath);
+    }
 
     private void Update()
     {
@@ -102,6 +121,11 @@ public class Player : MonoBehaviour
     {
         myrigidbody.transform.DOScaleY(jumpScaley, animationDuration).SetLoops(2, LoopType.Yoyo).SetEase(ease);
         myrigidbody.transform.DOScaleX(jumpScalex, animationDuration).SetLoops(2, LoopType.Yoyo).SetEase(ease);
+    }
+
+    public void DestroyMe()
+    {
+        Destroy(gameObject);
     }
 }
 
