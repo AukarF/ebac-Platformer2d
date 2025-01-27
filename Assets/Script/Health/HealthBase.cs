@@ -51,7 +51,7 @@ public class HealthBase : MonoBehaviour
         _isDead = true;
         if(destroyOnKill)
         {
-            Destroy(gameObject);
+            Destroy(gameObject, delayToKill);
         }
     }
 }
