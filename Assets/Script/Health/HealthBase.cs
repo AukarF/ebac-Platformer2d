@@ -22,7 +22,7 @@ public class HealthBase : MonoBehaviour
         init();
         if(_flashColor==null)
         {
-            _flashColor.GetComponent<FlashColor>();
+            _flashColor.GetComponentInChildren<FlashColor>();
         }
     }
 
