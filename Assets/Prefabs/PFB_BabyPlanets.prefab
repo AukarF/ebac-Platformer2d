@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8788370951246238251}
   - component: {fileID: 1867071597861601480}
   - component: {fileID: 3278185230377291287}
-  - component: {fileID: 7275107659929077449}
+  - component: {fileID: 5677214193083980158}
   m_Layer: 0
   m_Name: PFB_BabyPlanets
   m_TagString: Untagged
@@ -83,7 +83,7 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 15
   m_SortAtRoot: 0
---- !u!114 &7275107659929077449
+--- !u!114 &5677214193083980158
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1316895707366052647}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9658bfeda3c68c34a9859db84ad1197a, type: 3}
+  m_Script: {fileID: 11500000, guid: bbeab9efb15d4264faef4051e79e062f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   compareTag: Player

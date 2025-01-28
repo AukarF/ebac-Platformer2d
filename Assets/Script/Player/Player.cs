@@ -11,30 +11,28 @@ public class Player : MonoBehaviour
     [Header("Setup")]
     public SOPlayer soPlayerSetup;
 
-    //public Animator animator;
+    public Animator animator;
 
 
 
     private float _currentSpeed;
     //private bool _isRunning = false;
 
-    private Animator _currentPlayer;
+   
 
     private void Awake()
     {
         if(healthBase != null)
         {
             healthBase.OnKill += OnPlayerKill;
-        }
-
-        _currentPlayer = Instantiate(soPlayerSetup.player, transform);
+        }       
     }
 
     private void OnPlayerKill()
     {
         healthBase.OnKill -= OnPlayerKill;
 
-        _currentPlayer.SetTrigger(soPlayerSetup.triggerDeath);
+        animator.SetTrigger(soPlayerSetup.triggerDeath);
     }
 
     private void Update()
@@ -48,12 +46,12 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftControl))
         {
             _currentSpeed = soPlayerSetup.speedRun;
-            _currentPlayer.speed = 2f;
+            animator.speed = 2f;
         }
         else
         {
             _currentSpeed = soPlayerSetup.speed;
-            _currentPlayer.speed = 1f;
+            animator.speed = 1f;
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -64,7 +62,7 @@ public class Player : MonoBehaviour
             {
                 myrigidbody.transform.DOScaleX(-1, soPlayerSetup.animationSwipeDuration);
             }
-            _currentPlayer.SetBool(soPlayerSetup.boolRun, true);
+            animator.SetBool(soPlayerSetup.boolRun, true);
         }
 
         else if (Input.GetKey(KeyCode.RightArrow))
@@ -75,11 +73,11 @@ public class Player : MonoBehaviour
             {
                 myrigidbody.transform.DOScaleX(1, soPlayerSetup.animationSwipeDuration);
             }
-            _currentPlayer.SetBool(soPlayerSetup.boolRun, true);
+            animator.SetBool(soPlayerSetup.boolRun, true);
         }
         else
         {
-            _currentPlayer.SetBool(soPlayerSetup.boolRun, false);
+            animator.SetBool(soPlayerSetup.boolRun, false);
         }
 
         

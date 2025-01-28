@@ -503,6 +503,10 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: 0.018515825
       objectReference: {fileID: 0}
+    - target: {fileID: 7856468316143715168, guid: 1d7669df7e945614097d83051541f9fc, type: 3}
+      propertyPath: m_SortingOrder
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 8788370951246238251, guid: 1d7669df7e945614097d83051541f9fc, type: 3}
       propertyPath: m_LocalPosition.x
       value: -35.47
@@ -2048,6 +2052,10 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: 0.018515825
       objectReference: {fileID: 0}
+    - target: {fileID: 7856468316143715168, guid: 1d7669df7e945614097d83051541f9fc, type: 3}
+      propertyPath: m_SortingOrder
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 8788370951246238251, guid: 1d7669df7e945614097d83051541f9fc, type: 3}
       propertyPath: m_LocalPosition.x
       value: -31.44
@@ -2111,7 +2119,7 @@ GameObject:
   - component: {fileID: 597997605}
   - component: {fileID: 597997607}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: TMPRO_Coins
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2294,6 +2302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiTextCoins: {fileID: 597997605}
+  uiTextBabyPlanets: {fileID: 1687131879}
 --- !u!1 &622063981
 GameObject:
   m_ObjectHideFlags: 0
@@ -2780,6 +2789,10 @@ PrefabInstance:
     - target: {fileID: 1867071597861601480, guid: 1d7669df7e945614097d83051541f9fc, type: 3}
       propertyPath: m_Offset.y
       value: 0.018515825
+      objectReference: {fileID: 0}
+    - target: {fileID: 7856468316143715168, guid: 1d7669df7e945614097d83051541f9fc, type: 3}
+      propertyPath: m_SortingOrder
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 8788370951246238251, guid: 1d7669df7e945614097d83051541f9fc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3346,6 +3359,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8007466312498025151, guid: 00afc9fb4087652419d090da0b825d97, type: 3}
   m_PrefabInstance: {fileID: 269226665}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &857314183 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6413013834153556191, guid: 00afc9fb4087652419d090da0b825d97, type: 3}
+  m_PrefabInstance: {fileID: 269226665}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &872050622
 GameObject:
   m_ObjectHideFlags: 0
@@ -3873,6 +3891,10 @@ PrefabInstance:
     - target: {fileID: 1867071597861601480, guid: 1d7669df7e945614097d83051541f9fc, type: 3}
       propertyPath: m_Offset.y
       value: 0.018515825
+      objectReference: {fileID: 0}
+    - target: {fileID: 7856468316143715168, guid: 1d7669df7e945614097d83051541f9fc, type: 3}
+      propertyPath: m_SortingOrder
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 8788370951246238251, guid: 1d7669df7e945614097d83051541f9fc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5949,9 +5971,9 @@ GameObject:
   - component: {fileID: 1687131877}
   - component: {fileID: 1687131880}
   - component: {fileID: 1687131879}
-  - component: {fileID: 1687131878}
+  - component: {fileID: 1687131881}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: TMPRO_BP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5976,20 +5998,6 @@ RectTransform:
   m_AnchoredPosition: {x: 220.55, y: -34.49}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1687131878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1687131876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31190fb12bf4e9847940a7fd2ec0b6c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soInt: {fileID: 11400000, guid: 11ed05e3ca743ff489889d80acea259e, type: 2}
-  uiTextValue: {fileID: 1687131879}
 --- !u!114 &1687131879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6089,6 +6097,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687131876}
   m_CullTransparentMesh: 1
+--- !u!114 &1687131881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687131876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa954df333b4d04f92c0f47553bbadd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soInt2: {fileID: 11400000, guid: f4cf385323046f942b909985b78f8558, type: 2}
+  uiTextValue2: {fileID: 1687131879}
 --- !u!212 &1716863023 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 3096084783782573798, guid: 3de838754c767a446a5473969062a84e, type: 3}
@@ -6218,6 +6240,7 @@ MonoBehaviour:
   myrigidbody: {fileID: 1717963302}
   healthBase: {fileID: 1717963307}
   soPlayerSetup: {fileID: 11400000, guid: 918a2b94d9c327f4293671b529d72026, type: 2}
+  animator: {fileID: 857314183}
 --- !u!114 &1717963307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6438,6 +6461,10 @@ PrefabInstance:
     - target: {fileID: 1867071597861601480, guid: 1d7669df7e945614097d83051541f9fc, type: 3}
       propertyPath: m_Offset.y
       value: 0.018515825
+      objectReference: {fileID: 0}
+    - target: {fileID: 7856468316143715168, guid: 1d7669df7e945614097d83051541f9fc, type: 3}
+      propertyPath: m_SortingOrder
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 8788370951246238251, guid: 1d7669df7e945614097d83051541f9fc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7651,8 +7678,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e63b9d3839834e64bae6d264bed7bc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  babyPlanets: {fileID: 11400000, guid: f4cf385323046f942b909985b78f8558, type: 2}
   coins: {fileID: 11400000, guid: 11ed05e3ca743ff489889d80acea259e, type: 2}
   uiTextCoins: {fileID: 597997605}
+  uiTextBabyPlanets: {fileID: 1687131879}
 --- !u!4 &2116292421
 Transform:
   m_ObjectHideFlags: 0
@@ -7912,6 +7941,10 @@ PrefabInstance:
     - target: {fileID: 1867071597861601480, guid: 1d7669df7e945614097d83051541f9fc, type: 3}
       propertyPath: m_Offset.y
       value: 0.018515825
+      objectReference: {fileID: 0}
+    - target: {fileID: 7856468316143715168, guid: 1d7669df7e945614097d83051541f9fc, type: 3}
+      propertyPath: m_SortingOrder
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 8788370951246238251, guid: 1d7669df7e945614097d83051541f9fc, type: 3}
       propertyPath: m_LocalPosition.x

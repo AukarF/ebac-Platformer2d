@@ -6,7 +6,7 @@ using DG.Tweening;
 [CreateAssetMenu]
 public class SOPlayer : ScriptableObject
 {
-    public Animator player;
+    public Animator animator;
     public SOString soStringName;
     
     [Header("Speed Setup")]

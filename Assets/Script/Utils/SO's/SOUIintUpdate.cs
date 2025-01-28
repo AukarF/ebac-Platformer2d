@@ -7,7 +7,6 @@ public class SOUIintUpdate : MonoBehaviour
 {
 
     public SOInt soInt;
-
     public TextMeshProUGUI uiTextValue;
 
     private void Start()

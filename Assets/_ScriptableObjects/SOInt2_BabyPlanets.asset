@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7641cef73178c524c854cf70626d962e, type: 3}
-  m_Name: SOString_Player-2_name
+  m_Script: {fileID: 11500000, guid: 96e13685ef40f3f4ca077ff0ad482560, type: 3}
+  m_Name: SOInt2_BabyPlanets
   m_EditorClassIdentifier: 
-  value: Marcelo
+  value: 0
