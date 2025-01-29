@@ -8130,6 +8130,34 @@ PrefabInstance:
       propertyPath: 'CollisionModule.m_Planes.Array.data[0]'
       value: 
       objectReference: {fileID: 257315945}
+    - target: {fileID: 248769956636985860, guid: d68200807f51b0d4e8ad3f02eac2af05, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].time
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 248769956636985860, guid: d68200807f51b0d4e8ad3f02eac2af05, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 248769956636985860, guid: d68200807f51b0d4e8ad3f02eac2af05, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 248769956636985860, guid: d68200807f51b0d4e8ad3f02eac2af05, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 248769956636985860, guid: d68200807f51b0d4e8ad3f02eac2af05, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].inSlope
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 248769956636985860, guid: d68200807f51b0d4e8ad3f02eac2af05, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 248769956636985860, guid: d68200807f51b0d4e8ad3f02eac2af05, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].outSlope
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 2465722503425514146, guid: d68200807f51b0d4e8ad3f02eac2af05, type: 3}
       propertyPath: m_LocalPosition.x
       value: -43.69719
