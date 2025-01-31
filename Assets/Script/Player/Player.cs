@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
         {
             //myrigidbody.MovePosition(myrigidbody.position + velocity * Time.deltaTime);
             myrigidbody.linearVelocity = new Vector2(_currentSpeed, myrigidbody.linearVelocity.y);
-            if (myrigidbody.transform.localScale.x != -1)
+            if (myrigidbody.transform.localScale.x != 1)
             {
                 myrigidbody.transform.DOScaleX(1, soPlayerSetup.animationSwipeDuration);
             }
