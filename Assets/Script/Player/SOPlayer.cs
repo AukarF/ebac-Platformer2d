@@ -27,6 +27,10 @@ public class SOPlayer : ScriptableObject
     public string triggerDeath = "Death";
     public float animationSwipeDuration = .1f;
 
-
+    [Header("Jump Colission Check")]
+    public Collider2D collider2D;
+    public float disToGround;
+    public float spaceToGround = .1f;
+    public ParticleSystem jumpVFX;
 
 }

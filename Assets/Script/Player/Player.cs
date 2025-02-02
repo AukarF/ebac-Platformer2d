@@ -57,8 +57,8 @@ public class Player : MonoBehaviour
         HandleMovement();
     }
 
-    private void HandleMovement()
-    {
+   private void HandleMovement()
+   {
         if (Input.GetKey(KeyCode.LeftControl))
         {
             _currentSpeed = soPlayerSetup.speedRun;
@@ -106,21 +106,22 @@ public class Player : MonoBehaviour
         {
             myrigidbody.linearVelocity += soPlayerSetup.friction;
         }
-    }
+   }
+    
 
-    private void HandleJump()
-    {
-        if (Input.GetKeyDown(KeyCode.UpArrow) && IsGrounded())
-        {
-            myrigidbody.linearVelocity = Vector2.up * soPlayerSetup.forceJump;
-            myrigidbody.transform.localScale = Vector2.one;
+            private void HandleJump()
+            {
+                if (Input.GetKeyDown(KeyCode.UpArrow) && IsGrounded())
+                {
+                  myrigidbody.linearVelocity = Vector2.up * soPlayerSetup.forceJump;
+                  myrigidbody.transform.localScale = Vector2.one;
 
-            DOTween.Kill(myrigidbody.transform);
+                  DOTween.Kill(myrigidbody.transform);
 
-            HandleScaleJump();
-            PlayerJumpVFX();
-        }
-    }
+                  HandleScaleJump();
+                  PlayerJumpVFX();
+                }
+            }
 
     private void PlayerJumpVFX()
     {
