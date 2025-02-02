@@ -29,7 +29,7 @@ public class MenuManager : MonoBehaviour
     private void ShowButtons()
     {
 
-        for(int i = 0; 1 < buttons.Count; i++)
+        for (int i = 0; i < buttons.Count; i++)
         {
             var b = buttons[i];
             b.SetActive(true);
