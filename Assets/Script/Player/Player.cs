@@ -1,7 +1,5 @@
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
+using UnityEngine;
 
 public class Player : MonoBehaviour
 {
@@ -27,12 +25,12 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        if(healthBase != null)
+        if (healthBase != null)
         {
             healthBase.OnKill += OnPlayerKill;
-        }       
+        }
 
-        if(collider2D != null)
+        if (collider2D != null)
         {
             disToGround = collider2D.bounds.extents.y;
         }
@@ -98,7 +96,7 @@ public class Player : MonoBehaviour
             animator.SetBool(soPlayerSetup.boolRun, false);
         }
 
-        
+
 
         if (myrigidbody.linearVelocity.x > 0)
         {
@@ -121,15 +119,15 @@ public class Player : MonoBehaviour
 
             HandleScaleJump();
             PlayerJumpVFX();
-        }            
+        }
     }
 
     private void PlayerJumpVFX()
     {
         if (jumpVFX != null) jumpVFX.Play();
-        
 
-        
+
+
     }
 
     private void HandleScaleJump()
