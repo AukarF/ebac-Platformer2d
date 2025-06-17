@@ -21,6 +21,9 @@ public class Player : MonoBehaviour
     public float disToGround;
     public float spaceToGround = .1f;
     public ParticleSystem jumpVFX;
+    public Vector2 boxSize;
+    public float castDistance;
+    public LayerMask groundLayer;
 
     bool grounded;
 
@@ -37,13 +40,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    private bool IsGrounded()
-    {
-        //Debug.DrawRay(transform.position, -Vector2.up, Color.magenta, disToGround + spaceToGround);
-        return Physics2D.Raycast(transform.position, -Vector2.up, disToGround + spaceToGround);
-
-    }
-
     private void OnPlayerKill()
     {
         healthBase.OnKill -= OnPlayerKill;
@@ -58,8 +54,8 @@ public class Player : MonoBehaviour
         HandleMovement();
     }
 
-   private void HandleMovement()
-   {
+    private void HandleMovement()
+    {
         if (Input.GetKey(KeyCode.LeftControl))
         {
             _currentSpeed = soPlayerSetup.speedRun;
@@ -109,22 +105,22 @@ public class Player : MonoBehaviour
         {
             myrigidbody.linearVelocity += soPlayerSetup.friction;
         }
-   }
-   
-            private void HandleJump()
-            {
-                if (Input.GetKeyDown(KeyCode.UpArrow) && IsGrounded())
-                {
-                  myrigidbody.linearVelocity = Vector2.up * soPlayerSetup.forceJump;
-                  myrigidbody.transform.localScale = Vector2.one;
+    }
 
-                  DOTween.Kill(myrigidbody.transform);
-                  if (tween != null) tween.Kill();
+    private void HandleJump()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow) && IsGrounded())
+        {
+            myrigidbody.linearVelocity = Vector2.up * soPlayerSetup.forceJump;
+            myrigidbody.transform.localScale = Vector2.one;
 
-                  HandleScaleJump();
-                  PlayerJumpVFX();
-                }
-            }
+            DOTween.Kill(myrigidbody.transform);
+            if (tween != null) tween.Kill();
+
+            HandleScaleJump();
+            PlayerJumpVFX();
+        }
+    }
 
     private void PlayerJumpVFX()
     {
@@ -148,7 +144,7 @@ public class Player : MonoBehaviour
     private void ScaleXSetter(float value)
     {
         var s = myrigidbody.transform.localScale;
-            s.x = value * _playerDirection;
+        s.x = value * _playerDirection;
         myrigidbody.transform.localScale = s;
     }
 
@@ -157,22 +153,43 @@ public class Player : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    public bool IsGrounded()
     {
-        if (other.gameObject.CompareTag("GROUND"))
+        if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, castDistance, groundLayer))
         {
-            grounded = true;
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
-    private void OnCollisionExit2D(Collision2D other)
+    private void OnDrawGizmos()
     {
-        if (other.gameObject.CompareTag("GROUND"))
-        {
-            grounded = false;
-        }
-    
+        Gizmos.DrawWireCube(transform.position - transform.up * castDistance, boxSize);
     }
+
+    //private void OnCollisionEnter2D(Collision2D other)
+    //{
+    //    if (other.gameObject.CompareTag("GROUND"))
+    //    {
+    //        Vector3 normal = other.GetContact(0).normal;
+    //        if (normal == Vector3.up)
+    //        {
+    //            grounded = true;
+    //        }
+    //    }
+    //}
+
+    //private void OnCollisionExit2D(Collision2D other)
+    //{
+    //    if (other.gameObject.CompareTag("GROUND"))
+    //    {
+    //        grounded = false;
+    //    }
+
+    //} 
 }
 
 
