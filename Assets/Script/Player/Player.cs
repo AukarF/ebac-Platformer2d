@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     public float spaceToGround = .1f;
     public ParticleSystem jumpVFX;
 
+    bool grounded;
 
     private void Awake()
     {
@@ -154,6 +155,23 @@ public class Player : MonoBehaviour
     public void DestroyMe()
     {
         Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("GROUND"))
+        {
+            grounded = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("GROUND"))
+        {
+            grounded = false;
+        }
+    
     }
 }
 
