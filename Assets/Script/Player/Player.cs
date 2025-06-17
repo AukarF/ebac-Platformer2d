@@ -1,86 +1,77 @@
-using DG.Tweening;
 using UnityEngine;
+using DG.Tweening;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
     public Rigidbody2D myrigidbody;
     public HealthBase healthBase;
-
-    [Header("Setup")]
     public SOPlayer soPlayerSetup;
-
     public Animator animator;
 
+    [Header("Jump Check")]
+    public Collider2D collider2D;
+    public float spaceToGround = 0.1f;
+    public ParticleSystem jumpVFX;
 
+    [Header("Slide Settings")]
+    public float slideDuration = 0.5f;
+    public float slideSpeedMultiplier = 1.5f;
+
+    private float disToGround;
+    private Vector3 initialPosition;
     private int _playerDirection = 1;
     private float _currentSpeed;
-    //private bool _isRunning = false;
+    private Tweener tween;
+    private bool isSliding = false;
 
-    [Header("Jump Colission Check")]
-    public Collider2D collider2D;
-    public float disToGround;
-    public float spaceToGround = .1f;
-    public ParticleSystem jumpVFX;
-    public Vector2 boxSize;
-    public float castDistance;
-    public LayerMask groundLayer;
-
-    bool grounded;
+    [Header("Jump Physics")]
+    public float normalGravity = 1f;
+    public float fallGravity = 3f;
+    public float jumpForce = 12f;
 
     private void Awake()
     {
+        if (collider2D != null)
+            disToGround = collider2D.bounds.extents.y;
+
+        initialPosition = transform.position;
+
         if (healthBase != null)
         {
             healthBase.OnKill += OnPlayerKill;
+
+            if (healthBase.CurrentHealth <= 0)
+                healthBase.ResetHealth();
         }
-
-        if (collider2D != null)
-        {
-            disToGround = collider2D.bounds.extents.y;
-        }
-    }
-
-    private void OnPlayerKill()
-    {
-        healthBase.OnKill -= OnPlayerKill;
-
-        animator.SetTrigger(soPlayerSetup.triggerDeath);
     }
 
     private void Update()
     {
-        IsGrounded();
-        HandleJump();
-        HandleMovement();
+        //LockXPosition();    //manter o personagem fixo na camera
+        HandleMovement();   //animacao de correr
+        HandleJump();       // input de pulo
+        HandleSlide();      //input de slide
+    }
+
+    private void LockXPosition()
+    {
+        transform.position = new Vector3(initialPosition.x, transform.position.y, transform.position.z);
+        myrigidbody.linearVelocity = new Vector2(0f, myrigidbody.linearVelocity.y);
     }
 
     private void HandleMovement()
     {
-        if (Input.GetKey(KeyCode.LeftControl))
-        {
-            _currentSpeed = soPlayerSetup.speedRun;
-            animator.speed = 2f;
-        }
-        else
-        {
-            _currentSpeed = soPlayerSetup.speed;
-            animator.speed = 1f;
-        }
+        animator.speed = 1f;
 
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            //myrigidbody.MovePosition(myrigidbody.position - velocity * Time.deltaTime);
-            myrigidbody.linearVelocity = new Vector2(-_currentSpeed, myrigidbody.linearVelocity.y);
-            if (myrigidbody.transform.localScale.x != -1)
-            {
-                myrigidbody.transform.DOScaleX(-1, soPlayerSetup.animationSwipeDuration);
-            }
-            animator.SetBool(soPlayerSetup.boolRun, true);
-            _playerDirection = -1;
-        }
+        if (myrigidbody.transform.localScale.x != 1)
+            myrigidbody.transform.DOScaleX(1, soPlayerSetup.animationSwipeDuration);
 
-        else if (Input.GetKey(KeyCode.RightArrow))
-        {
+        animator.SetBool(soPlayerSetup.boolRun, true);
+        _playerDirection = 1;
+
+         if (Input.GetKey(KeyCode.RightArrow))
+         {
             //myrigidbody.MovePosition(myrigidbody.position + velocity * Time.deltaTime);
             myrigidbody.linearVelocity = new Vector2(_currentSpeed, myrigidbody.linearVelocity.y);
             if (myrigidbody.transform.localScale.x != 1)
@@ -89,63 +80,85 @@ public class Player : MonoBehaviour
             }
             animator.SetBool(soPlayerSetup.boolRun, true);
             _playerDirection = 1;
-        }
-        else
-        {
-            animator.SetBool(soPlayerSetup.boolRun, false);
-        }
-
-
-
-        if (myrigidbody.linearVelocity.x > 0)
-        {
-            myrigidbody.linearVelocity -= soPlayerSetup.friction;
-        }
-        else if (myrigidbody.linearVelocity.x < 0)
-        {
-            myrigidbody.linearVelocity += soPlayerSetup.friction;
-        }
+         }
     }
 
     private void HandleJump()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow) && IsGrounded())
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            myrigidbody.linearVelocity = Vector2.up * soPlayerSetup.forceJump;
-            myrigidbody.transform.localScale = Vector2.one;
+            //reativar isso quando o terreno estiver com Layer "Ground"
+            // if (!IsGrounded()) return;
 
+            Debug.Log("Pulando (sem checar chão)");
+            myrigidbody.linearVelocity = new Vector2(myrigidbody.linearVelocity.x, 0); //zera o Y pra nao somar força com o pulo anterior
+            myrigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); //deixa o pulo baseado em impulso, mais realista.
             DOTween.Kill(myrigidbody.transform);
             if (tween != null) tween.Kill();
 
             HandleScaleJump();
             PlayerJumpVFX();
+
+            animator.SetTrigger("Jump");
         }
+    }
+
+    private void HandleSlide()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow) && !isSliding)
+        {
+            Debug.Log("Iniciando slide");
+            StartCoroutine(Slide());
+        }
+    }
+
+    private IEnumerator Slide()
+    {
+        isSliding = true;
+
+        if (animator != null)
+            animator.SetTrigger("Slide");
+
+        // Acelera objetos com AutoMove
+        AutoMove[] movingObjects = FindObjectsOfType<AutoMove>();
+        foreach (var obj in movingObjects)
+            obj.speed *= slideSpeedMultiplier;
+
+        yield return new WaitForSeconds(slideDuration);
+
+        foreach (var obj in movingObjects)
+            obj.speed /= slideSpeedMultiplier;
+
+        isSliding = false;
+    }
+
+    private void HandleScaleJump()
+    {
+        myrigidbody.transform.DOScaleY(soPlayerSetup.jumpScaley, soPlayerSetup.animationDuration)
+            .SetLoops(2, LoopType.Yoyo).SetEase(soPlayerSetup.ease);
+
+        tween = DOTween.To(() => myrigidbody.transform.localScale.x,
+                           value => myrigidbody.transform.localScale = new Vector3(value * _playerDirection,
+                            myrigidbody.transform.localScale.y,
+                            myrigidbody.transform.localScale.z),
+                            soPlayerSetup.jumpScalex,
+                            soPlayerSetup.animationDuration)
+                        .SetLoops(2, LoopType.Yoyo).SetEase(soPlayerSetup.ease);
     }
 
     private void PlayerJumpVFX()
     {
-        if (jumpVFX != null) jumpVFX.Play();
-
-
-
-    }
-    Tweener tween;
-    private void HandleScaleJump()
-    {
-        myrigidbody.transform.DOScaleY(soPlayerSetup.jumpScaley, soPlayerSetup.animationDuration).SetLoops(2, LoopType.Yoyo).SetEase(soPlayerSetup.ease);
-        tween = DOTween.To(ScaleXGetter, ScaleXSetter, soPlayerSetup.jumpScalex, soPlayerSetup.animationDuration).SetLoops(2, LoopType.Yoyo).SetEase(soPlayerSetup.ease);
+        if (jumpVFX != null)
+            jumpVFX.Play();
     }
 
-    private float ScaleXGetter()
+    private void OnPlayerKill()
     {
-        return myrigidbody.transform.localScale.x;
-    }
+        if (animator != null)
+            animator.SetTrigger(soPlayerSetup.triggerDeath);
 
-    private void ScaleXSetter(float value)
-    {
-        var s = myrigidbody.transform.localScale;
-        s.x = value * _playerDirection;
-        myrigidbody.transform.localScale = s;
+        if (healthBase != null)
+            healthBase.OnKill -= OnPlayerKill;
     }
 
     public void DestroyMe()
@@ -153,43 +166,25 @@ public class Player : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public bool IsGrounded()
+    //  Desativado temporariamente, só usar quando tiver Ground Layer configurada
+    /*
+    private bool IsGrounded()
     {
-        if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, castDistance, groundLayer))
+        Vector2 origin = collider2D.bounds.center;
+        origin.y = collider2D.bounds.min.y;
+        Debug.DrawRay(origin, Vector2.down * spaceToGround, Color.magenta);
+        return Physics2D.Raycast(origin, Vector2.down, spaceToGround, LayerMask.GetMask("Ground"));
+    }
+    */
+    private void FixedUpdate()
+    {
+        if (myrigidbody.linearVelocity.y < 0)
         {
-            return true;
+            myrigidbody.gravityScale = fallGravity; //mais gravidade ao cair (cai mais rapido)
         }
         else
         {
-            return false;
+            myrigidbody.gravityScale = normalGravity; //gravidade normal quando nao tem trigger
         }
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireCube(transform.position - transform.up * castDistance, boxSize);
-    }
-
-    //private void OnCollisionEnter2D(Collision2D other)
-    //{
-    //    if (other.gameObject.CompareTag("GROUND"))
-    //    {
-    //        Vector3 normal = other.GetContact(0).normal;
-    //        if (normal == Vector3.up)
-    //        {
-    //            grounded = true;
-    //        }
-    //    }
-    //}
-
-    //private void OnCollisionExit2D(Collision2D other)
-    //{
-    //    if (other.gameObject.CompareTag("GROUND"))
-    //    {
-    //        grounded = false;
-    //    }
-
-    //} 
 }
-
-

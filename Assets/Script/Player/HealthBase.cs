@@ -1,35 +1,39 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 
 public class HealthBase : MonoBehaviour
 {
     public Action OnKill;
-    
-    public float startLife = 10f;
 
+    public float startLife = 10f;
     public bool destroyOnKill = false;
     public float delayToKill = 0f;
-    
+
     private float _currentLife;
     private bool _isDead = false;
 
     public FlashColor _flashColor;
 
+    public float CurrentHealth => _currentLife; // ✅ Expor vida atual para leitura
+
     private void Awake()
     {
-        init();
-        if(_flashColor==null)
-        {
-            _flashColor.GetComponentInChildren<FlashColor>();
-        }
+        Init();
+
+        if (_flashColor == null)
+            _flashColor = GetComponentInChildren<FlashColor>();
     }
 
-    private void init()
+    public void Init()
     {
         _isDead = false;
         _currentLife = startLife;
+    }
+
+    public void ResetHealth() // ✅ Método chamado pelo Player.cs se vida estiver zerada
+    {
+        Init();
     }
 
     public void Damage(int damage)
@@ -43,7 +47,7 @@ public class HealthBase : MonoBehaviour
             Kill();
         }
 
-        if(_flashColor != null)
+        if (_flashColor != null)
         {
             _flashColor.Flash();
         }
@@ -52,13 +56,10 @@ public class HealthBase : MonoBehaviour
     private void Kill()
     {
         _isDead = true;
-        if(destroyOnKill)
-        {
+
+        if (destroyOnKill)
             Destroy(gameObject, delayToKill);
-        }
 
         OnKill?.Invoke();
     }
-
-
 }
